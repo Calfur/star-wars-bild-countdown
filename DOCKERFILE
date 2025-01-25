@@ -1,0 +1,5 @@
+ARG NGINX_VERSION=alpine
+FROM nginx:${NGINX_VERSION}
+COPY /app /usr/share/nginx/html
+LABEL version=$NGINX_VERSION
+EXPOSE 80
