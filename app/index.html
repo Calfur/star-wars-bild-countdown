@@ -16,6 +16,8 @@
       justify-content: center;
       height: 100vh;
       color: #f0f0f0;
+      overflow: hidden;
+      position: relative;
     }
     h1 {
       background: #4d4dff;
@@ -32,11 +34,33 @@
       border-radius: 8px;
       text-align: center;
     }
+    #lightsaber-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .lightsaber {
+      position: absolute;
+      left: -50px;
+      width: 10px;
+      height: 80px;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      animation-name: fly;
+    }
+    @keyframes fly {
+      0% { transform: translateX(0) }
+      100% { transform: translateX(120vw) }
+    }
   </style>
 </head>
 <body>
   <h1>Julia's "Starwars Bild" Countdown</h1>
   <p id="demo"></p>
+  <div id="lightsaber-container"></div>
   <script>
     var countDownDate = new Date("Aug 17, 2034 00:00:01").getTime();
     var x = setInterval(function() {
@@ -54,6 +78,22 @@
         document.getElementById("demo").innerHTML = "EXPIRED";
       }
     }, 10);
+
+    function createLightsabers() {
+      var colors = ['#ff0000','#00ff00','#0000ff','#ffff00','#00ffff','#ff00ff'];
+      var container = document.getElementById('lightsaber-container');
+      for (var i = 0; i < 10; i++) {
+        var saber = document.createElement('div');
+        saber.className = 'lightsaber';
+        var c = colors[Math.floor(Math.random() * colors.length)];
+        saber.style.background = 'linear-gradient(to bottom, #fff 10%, '+ c +' 30%, '+ c +' 70%, #fff 90%)';
+        saber.style.top = Math.random() * 90 + '%';
+        saber.style.animationDuration = (5 + Math.random() * 5) + 's';
+        saber.style.animationDelay = Math.random() * 5 + 's';
+        container.appendChild(saber);
+      }
+    }
+    createLightsabers();
   </script>
 </body>
 </html>
