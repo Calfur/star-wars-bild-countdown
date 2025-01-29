@@ -3,97 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #1a1a1a;
-      font-family: 'Roboto', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      color: #f0f0f0;
-      overflow: hidden;
-      position: relative;
-    }
-    h1 {
-      background: #4d4dff;
-      color: #fff;
-      padding: 1rem;
-      text-align: center;
-      width: 100%;
-      margin: 0;
-    }
-    #demo {
-      font-size: 2rem;
-      padding: 2rem;
-      background: #333;
-      border-radius: 8px;
-      text-align: center;
-    }
-    #lightsaber-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-    }
-    .lightsaber {
-      position: absolute;
-      left: -50px;
-      width: 10px;
-      height: 80px;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-      animation-name: fly;
-    }
-    @keyframes fly {
-      0% { transform: translateX(0) }
-      100% { transform: translateX(120vw) }
-    }
-  </style>
+
+  <link rel="stylesheet" type="text/css" href="font/fonts.css">
+  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-  <h1>Julia's "Starwars Bild" Countdown</h1>
-  <p id="demo"></p>
-  <div id="lightsaber-container"></div>
+  <div class="title">
+    <h2>Julia's </h2>
+    <h1>"Starwars Bild"</h1>
+    <h2>Countdown</h2>
+  </div>
+
+  <div class="counter-container">
+    <p id="counter"></p>
+  </div>
+
+  <div>
+    
+  </div>
+
+
   <script>
-    var countDownDate = new Date("Aug 17, 2034 00:00:01").getTime();
+    var finalDate = new Date("Aug 17, 2034 00:00:00").getTime();
+
     var x = setInterval(function() {
       var now = new Date().getTime();
-      var distance = countDownDate - now;
-      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var distance = finalDate - now;
+
+      var years = Math.floor(distance / (1000 * 60 * 60 * 24 * 365));
+      var months = Math.floor((distance % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
+      var days = Math.floor((distance % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
       var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
       var milliseconds = distance % 1000;
-      document.getElementById("demo").innerHTML = 
-        days + "d " + hours + "h " + minutes + "m " + seconds + "s " + milliseconds + "ms";
+
+      document.getElementById("counter").innerHTML = 
+        years + "y " + months + "mo " + days + "d " + hours + "h " + minutes + "m " + seconds + "s " + milliseconds + "ms";
+
       if (distance < 0) {
         clearInterval(x);
-        document.getElementById("demo").innerHTML = "EXPIRED";
+        document.getElementById("counter").innerHTML = "EXPIRED";
       }
     }, 10);
-
-    function createLightsabers() {
-      var colors = ['#ff0000','#00ff00','#0000ff','#ffff00','#00ffff','#ff00ff'];
-      var container = document.getElementById('lightsaber-container');
-      for (var i = 0; i < 10; i++) {
-        var saber = document.createElement('div');
-        saber.className = 'lightsaber';
-        var c = colors[Math.floor(Math.random() * colors.length)];
-        saber.style.background = 'linear-gradient(to bottom, #fff 10%, '+ c +' 30%, '+ c +' 70%, #fff 90%)';
-        saber.style.top = Math.random() * 90 + '%';
-        saber.style.animationDuration = (5 + Math.random() * 5) + 's';
-        saber.style.animationDelay = Math.random() * 5 + 's';
-        container.appendChild(saber);
-      }
-    }
-    createLightsabers();
+    
   </script>
 </body>
 </html>
