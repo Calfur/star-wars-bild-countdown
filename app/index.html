@@ -30,22 +30,33 @@
   </div>
 
   <script>
-    var finalDate = new Date("Aug 17, 2034 00:00:00").getTime();
+    var finalDate = new Date("Aug 17, 2034 00:00:00");
 
     var x = setInterval(function() {
-      var now = new Date().getTime();
+      var now = new Date();
       var distance = finalDate - now;
 
-      var years = Math.floor(distance / (1000 * 60 * 60 * 24 * 365));
-      var months = Math.floor((distance % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
-      var days = Math.floor((distance % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+      var years = finalDate.getFullYear() - now.getFullYear();
+      var months = finalDate.getMonth() - now.getMonth();
+      var days = finalDate.getDate() - now.getDate();
+
+      if (days < 0) {
+        months--;
+        var lastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+        days += lastMonth.getDate();
+      }
+      if (months < 0) {
+        years--;
+        months += 12;
+      }
+
       var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
       var milliseconds = distance % 1000;
 
       document.getElementById("counter").innerHTML = 
-        years + "y " + months + "mo " + days + "d " + hours + "h " + minutes + "m " + seconds + "s " + milliseconds + "ms";
+        years + "y " + months + "m " + days + "d " + hours + "h " + minutes + "m " + seconds + "s " + milliseconds + "ms";
 
       // Show #jedi only from full hour to 5 minutes after a full hour
       var currentMinutes = new Date().getMinutes();
